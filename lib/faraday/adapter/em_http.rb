@@ -27,7 +27,7 @@ module Faraday
             # file: 'path/to/file', # stream data off disk
           }
           configure_compression(options, env)
-          options
+          options.merge(decoding: false)
         end
 
         def read_body(env)
