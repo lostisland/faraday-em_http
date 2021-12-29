@@ -9,7 +9,6 @@ Every adapter is defined into its own gem. This gem defines the adapter for Em::
 Add these lines to your application's Gemfile:
 
 ```ruby
-gem 'em-http-request', '>= 1.1'
 gem 'faraday-em_http'
 ```
 
@@ -19,20 +18,53 @@ And then execute:
 
 Or install them yourself as:
 
-    $ gem install em-http-request -v '>= 1.1'
     $ gem install faraday-em_http
 
 ## Usage
 
-Configure your Faraday connection to use this adapter like this:
+This adapter can be used to make parallel requests using EventMachine.
+
+The major difference between this and [EMSynchrony](https://github.com/lostisland/faraday-em_synchrony) is that it does not use fibers.
+
+**Error handling and responses have a slightly different behaviour and structure in some cases. Please run thorough testing scenarios, including connection failures and SSL failures**
+
+
+### Base request
 
 ```ruby
-connection = Faraday.new(url, conn_options) do |conn|
-  conn.adapter(:em_http)
+require 'faraday/em_http'
+
+conn = Faraday.new(...) do |f|
+  # no custom options available
+  f.adapter :em_http
 end
 ```
 
-For more information on how to setup your Faraday connection and adapters usage, please refer to the [Faraday Website][faraday-website].
+### Parallel Requests
+
+```ruby
+require 'faraday/em_http'
+
+urls = Array.new(5) { 'http://127.0.0.1:3000' }
+
+conn = Faraday::Connection.new do |builder|
+  builder.adapter :em_http
+end
+
+begin
+  conn.in_parallel do
+    puts "Parallel manager: #{conn.parallel_manager}"
+
+    @responses = urls.map do |url|
+      conn.get(url)
+    end
+  end
+end
+
+# Gather responses outside of block
+puts @responses.map(&:status).join(', ')
+puts @responses.map(&:status).compact.count
+```
 
 ## Development
 
