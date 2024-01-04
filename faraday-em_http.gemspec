@@ -22,9 +22,8 @@ Gem::Specification.new do |spec|
   spec.files = Dir.glob('lib/**/*') + %w[README.md LICENSE.md]
   spec.require_paths = ['lib']
 
-  # TODO: make these normal dependencies when releasing v2.0 together with Faraday v2.0
-  spec.add_development_dependency 'em-http-request', '>= 1.1'
-  spec.add_development_dependency 'faraday', '~> 1.0'
+  spec.add_runtime_dependency 'em-http-request', '>= 1.1'
+  spec.add_runtime_dependency 'faraday', '~> 2.0'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 13.0'

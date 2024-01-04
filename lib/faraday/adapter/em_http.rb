@@ -1,4 +1,17 @@
 # frozen_string_literal: true
+require 'em-http'
+
+begin
+  require 'openssl'
+rescue LoadError
+  warn 'Warning: no such file to load -- openssl. ' \
+    'Make sure it is installed if you want HTTPS support'
+else
+  require 'em-http/version'
+  if EventMachine::HttpRequest::VERSION < '1.1.6'
+    require 'faraday/adapter/em_http_ssl_patch'
+  end
+end
 
 module Faraday
   class Adapter
@@ -89,22 +102,6 @@ module Faraday
       end
 
       include Options
-
-      dependency do
-        require 'em-http'
-
-        begin
-          require 'openssl'
-        rescue LoadError
-          warn 'Warning: no such file to load -- openssl. ' \
-            'Make sure it is installed if you want HTTPS support'
-        else
-          require 'em-http/version'
-          if EventMachine::HttpRequest::VERSION < '1.1.6'
-            require 'faraday/adapter/em_http_ssl_patch'
-          end
-        end
-      end
 
       self.supports_parallel = true
 
