@@ -32,8 +32,4 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'multipart-parser', '~> 0.1.1'
   spec.add_development_dependency 'webmock', '~> 3.4'
-
-  spec.add_development_dependency 'rubocop', '~> 0.91.1'
-  spec.add_development_dependency 'rubocop-packaging', '~> 0.5'
-  spec.add_development_dependency 'rubocop-performance', '~> 1.0'
 end
