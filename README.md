@@ -24,7 +24,7 @@ Or install them yourself as:
 
 This adapter can be used to make parallel requests using EventMachine.
 
-The major difference between this and [EMSynchrony](https://github.com/lostisland/faraday-em_synchrony) is that it does not use fibers.
+The major difference between this and [Faraday Em::Synchrony adapter](https://github.com/lostisland/faraday-em_synchrony) is that it does not use fibers.
 
 **Error handling and responses have a slightly different behaviour and structure in some cases. Please run thorough testing scenarios, including connection failures and SSL failures**
 
