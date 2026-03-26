@@ -80,6 +80,7 @@ module Faraday
             cert_chain_file: env[:ssl][:ca_file],
             verify_peer: env[:ssl].fetch(:verify, true)
           }
+          options[:ssl][:cipher_list] = env[:ssl][:ciphers] if env[:ssl][:ciphers]
         end
 
         # Reads out timeout settings from env into options
